@@ -1,4 +1,8 @@
-# Projeto de Monitoramento dos Oceanos e Conscientização Ambiental nas Escolas
+# Global Solution - 2 SEMESTRE
+
+            Jeferson Gabriel de Mendonça | 553149 
+            Larissa Estella Gonçalves dos Santos | 552695
+            Victor Henrique Vilares Rodrigues | 554175
 
 ## Descrição do Projeto
 
