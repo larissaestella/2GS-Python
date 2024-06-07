@@ -76,13 +76,14 @@ Abra o terminal/Prompt de Comando
     ```
 
 - O terminal irá pedir para você inserir a quantidade de plástico detectado e a temperatura da água para o barco.
+- Os dados coletados serão salvos em um arquivo JSON chamado `dados_oceano.json`.
 - Em seguida, você precisará inserir os tipos de materiais recicláveis e seus pesos coletados na escola.
 - Após a coleta, o programa pedirá o preço por kg dos materiais recicláveis para calcular os ganhos.
-- Os dados coletados serão salvos em um arquivo JSON chamado `dados_oceano.json` e os ganhos serão exibidos no terminal.
+- Os dados coletados serão salvos em um arquivo JSON chamado `dados_escola.json`
 
 2. **Resultados Esperados**:
     - Dados de monitoramento do oceano serão exibidos no terminal e salvos em um arquivo JSON.
-    - Informações sobre materiais recicláveis coletados e fundos gerados serão exibidas no terminal.
+    - Informações sobre materiais recicláveis coletados e fundos gerados serão exibidas no terminal e salvos em um arquivo JSON.
 
 
 
