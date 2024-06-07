@@ -1,1 +1,1 @@
-# 2GS-Python
+# Global Solution 
