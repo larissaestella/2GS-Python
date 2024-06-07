@@ -1,0 +1,15 @@
+{
+    "nome_escola": "Escola Verde",
+    "fundos": 12.0,
+    "registro_vendas": [
+        {
+            "timestamp": "2024-06-07T00:02:53.435935",
+            "materiais_coletados": {
+                "garrafas PET": 3.0,
+                "sacolas pl\u00e1sticas": 5.0
+            },
+            "preco_por_kg": 1.5,
+            "fundos": 12.0
+        }
+    ]
+}

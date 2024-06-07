@@ -1,20 +1,14 @@
 [
     {
-        "timestamp": "2024-06-06T23:12:39.212625",
+        "timestamp": "2024-06-07T00:02:22.126698",
         "id_barco": "Barco_123",
-        "plastico_detectado": 2.9521448028342325,
-        "temperatura_agua": 19.802746758154264
+        "plastico_detectado": 12.0,
+        "temperatura_agua": 12.0
     },
     {
-        "timestamp": "2024-06-06T23:12:39.213709",
+        "timestamp": "2024-06-07T00:02:24.050176",
         "id_barco": "Barco_123",
-        "plastico_detectado": 4.84333376091125,
-        "temperatura_agua": 16.878307303615713
-    },
-    {
-        "timestamp": "2024-06-06T23:12:39.214713",
-        "id_barco": "Barco_123",
-        "plastico_detectado": 0.74869688289463,
-        "temperatura_agua": 26.53858150310634
+        "plastico_detectado": 12.0,
+        "temperatura_agua": 12.0
     }
 ]

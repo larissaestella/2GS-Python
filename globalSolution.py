@@ -1,4 +1,3 @@
-import random
 import datetime
 import json
 
@@ -8,12 +7,19 @@ class MonitoramentoOceano:
         self.registro_dados = []
 
     def coletar_dados(self):
-        # Simular a coleta de dados
+        # Coletar dados via input do usuário
+        try:
+            plastico_detectado = float(input(f"Digite a quantidade de plástico detectado (kg/km²) para o barco {self.id_barco}: "))
+            temperatura_agua = float(input(f"Digite a temperatura da água (Celsius) para o barco {self.id_barco}: "))
+        except ValueError:
+            print("Entrada inválida. Por favor, insira valores numéricos.")
+            return None
+
         dados = {
             'timestamp': datetime.datetime.now().isoformat(),
             'id_barco': self.id_barco,
-            'plastico_detectado': random.uniform(0, 5),  # kg/km²
-            'temperatura_agua': random.uniform(15, 30)  # Celsius
+            'plastico_detectado': plastico_detectado,
+            'temperatura_agua': temperatura_agua
         }
         self.registro_dados.append(dados)
         return dados
@@ -23,46 +29,62 @@ class MonitoramentoOceano:
             json.dump(self.registro_dados, arquivo, indent=4)
         print(f"Dados salvos em {nome_arquivo}")
 
-monitoramento_barco = MonitoramentoOceano(id_barco="Barco_123")
-for _ in range(10):  # Simular 10 pontos de dados
-    dados = monitoramento_barco.coletar_dados()
-    print(dados)
-
-monitoramento_barco.salvar_dados("dados_oceano.json")
-
-
 class ProgramaReciclagemEscola:
     def __init__(self, nome_escola):
         self.nome_escola = nome_escola
         self.materiais_coletados = {}
         self.fundos = 0
+        self.registro_vendas = []
 
-    def coletar_material(self, material, peso):
+    def coletar_material(self):
+        # Coletar dados via input do usuário
+        material = input(f"Digite o tipo de material coletado na escola {self.nome_escola} (ex: garrafas PET, sacolas plásticas): ")
+        try:
+            peso = float(input(f"Digite o peso (kg) do material {material} coletado: "))
+        except ValueError:
+            print("Entrada inválida. Por favor, insira um valor numérico para o peso.")
+            return
+
         if material in self.materiais_coletados:
             self.materiais_coletados[material] += peso
         else:
             self.materiais_coletados[material] = peso
         print(f"Coletados {peso} kg de {material}")
 
-    def vender_materiais(self, preco_por_kg):
+    def vender_materiais(self):
+        try:
+            preco_por_kg = float(input(f"Digite o preço por kg dos materiais recicláveis para a escola {self.nome_escola}: "))
+        except ValueError:
+            print("Entrada inválida. Por favor, insira um valor numérico para o preço por kg.")
+            return
+
         peso_total = sum(self.materiais_coletados.values())
-        ganhos = peso_total * preco_por_kg
-        self.fundos += ganhos
-        print(f"Vendidos {peso_total} kg de materiais por R${ganhos:.2f}")
+        fundos = peso_total * preco_por_kg
+        self.fundos += fundos
+
+        venda = {
+            'timestamp': datetime.datetime.now().isoformat(),
+            'materiais_coletados': self.materiais_coletados.copy(),
+            'preco_por_kg': preco_por_kg,
+            'fundos': fundos
+        }
+        self.registro_vendas.append(venda)
+
+        print(f"Vendidos {peso_total} kg de materiais por R${fundos:.2f}")
         self.materiais_coletados = {}  # Resetar após a venda
 
     def obter_fundos(self):
         return self.fundos
 
-programa_escola = ProgramaReciclagemEscola(nome_escola="Escola Verde")
-programa_escola.coletar_material("plástico", 10)
-programa_escola.coletar_material("alumínio", 5)
-programa_escola.coletar_material("plástico", 2)
-
-programa_escola.vender_materiais(preco_por_kg=0.5)
-print(f"Total de fundos arrecadados: R${programa_escola.obter_fundos():.2f}")
-
-
+    def salvar_dados(self, nome_arquivo):
+        dados = {
+            'nome_escola': self.nome_escola,
+            'fundos': self.fundos,
+            'registro_vendas': self.registro_vendas
+        }
+        with open(nome_arquivo, 'w') as arquivo:
+            json.dump(dados, arquivo, indent=4)
+        print(f"Dados salvos em {nome_arquivo}")
 
 class ProjetoAmbiental:
     def __init__(self):
@@ -82,15 +104,15 @@ class ProjetoAmbiental:
             print(f"ID do barco {id_barco} não encontrado")
             return None
 
-    def coletar_material_escola(self, nome_escola, material, peso):
+    def coletar_material_escola(self, nome_escola):
         if nome_escola in self.programas_escolas:
-            self.programas_escolas[nome_escola].coletar_material(material, peso)
+            self.programas_escolas[nome_escola].coletar_material()
         else:
             print(f"Escola {nome_escola} não encontrada")
 
-    def vender_materiais_escola(self, nome_escola, preco_por_kg):
+    def vender_materiais_escola(self, nome_escola):
         if nome_escola in self.programas_escolas:
-            self.programas_escolas[nome_escola].vender_materiais(preco_por_kg)
+            self.programas_escolas[nome_escola].vender_materiais()
         else:
             print(f"Escola {nome_escola} não encontrada")
 
@@ -100,6 +122,12 @@ class ProjetoAmbiental:
         else:
             print(f"ID do barco {id_barco} não encontrado")
 
+    def salvar_dados_escola(self, nome_escola, nome_arquivo):
+        if nome_escola in self.programas_escolas:
+            self.programas_escolas[nome_escola].salvar_dados(nome_arquivo)
+        else:
+            print(f"Escola {nome_escola} não encontrada")
+
     def obter_fundos_escola(self, nome_escola):
         if nome_escola in self.programas_escolas:
             return self.programas_escolas[nome_escola].obter_fundos()
@@ -107,19 +135,24 @@ class ProjetoAmbiental:
             print(f"Escola {nome_escola} não encontrada")
             return None
 
+# Exemplo de uso
 projeto = ProjetoAmbiental()
 projeto.adicionar_barco("Barco_123")
 projeto.adicionar_escola("Escola Verde")
 
-for _ in range(3):  # Simular 10 pontos de dados
+# Coleta de dados do oceano via input do usuário
+for _ in range(2):  # Coleta 2 pontos de dados como exemplo
     dados = projeto.coletar_dados_oceano("Barco_123")
     print(dados)
 
 projeto.salvar_dados_oceano("Barco_123", "dados_oceano.json")
 
-projeto.coletar_material_escola("Escola Verde", "plástico", 10)
-projeto.coletar_material_escola("Escola Verde", "alumínio", 5)
-projeto.coletar_material_escola("Escola Verde", "plástico", 2)
+# Coleta de materiais recicláveis na escola via input do usuário
+for _ in range(2):  # Coleta materiais 2 vezes como exemplo
+    projeto.coletar_material_escola("Escola Verde")
 
-projeto.vender_materiais_escola("Escola Verde", preco_por_kg=0.5)
-print(f"Total de fundos arrecadados pela Escola Verde: R${projeto.obter_fundos_escola("Escola Verde"):.2f}")
+projeto.vender_materiais_escola("Escola Verde")
+print(f"Total de fundos arrecadados pela Escola Verde: R${projeto.obter_fundos_escola('Escola Verde'):.2f}")
+
+# Salvar dados da escola em um arquivo JSON
+projeto.salvar_dados_escola("Escola Verde", "dados_escola.json")
